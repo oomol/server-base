@@ -5,7 +5,7 @@ RUN apt-get update
 RUN apt-get install -y libsecret-1-dev libzmq3-dev libzmq5 jq curl libbz2-dev libssl-dev libreadline-dev libncurses5 libncurses5-dev libncursesw5
 RUN apt-get install -y gcc g++ make git zsh
 
-RUN curl -fsSL https://deb.nodesource.com/setup_18.x | sh
+RUN curl -fsSL https://deb.nodesource.com/setup_18.x | bash
 RUN apt-get install -y nodejs
 
 ENV PYENV_ROOT="${HOME}/.pyenv"
