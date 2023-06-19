@@ -34,7 +34,7 @@ jobs:
       - name: Setup Docker buildx
         uses: docker/setup-buildx-action@ecf95283f03858871ff00b787d79c419715afc34 # v2.7.0
         with:
-          platforms: linux/amd64,linux/arm64,darwin/arm64,darwin/amd64
+          platforms: linux/amd64,linux/arm64
           buildkitd-flags: --debug
 
       - name: Build Docker image
@@ -44,7 +44,7 @@ jobs:
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
-          platforms: linux/amd64,linux/arm64,darwin/arm64,darwin/amd64
+          platforms: linux/amd64,linux/arm64
 
       - name: Create github release
         uses: softprops/action-gh-release@de2c0eb89ae2a093876385947365aca7b0e5f844 # v0.1.15

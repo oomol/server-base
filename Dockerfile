@@ -1,4 +1,4 @@
-FROM --platform=$BUILDPLATFORM ubuntu:22.04
+FROM ubuntu:22.04
 ENV HOME="/root"
 
 RUN apt-get update
