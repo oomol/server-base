@@ -1,19 +1,18 @@
-FROM ubuntu:22.04
+FROM python:3.9-slim
+
 ENV HOME="/root"
 
+# 替换清华源
+# RUN echo "deb https://mirrors.tuna.tsinghua.edu.cn/debian/ bullseye main contrib non-free" > /etc/apt/sources.list \
+#   && echo "deb https://mirrors.tuna.tsinghua.edu.cn/debian/ bullseye-updates main contrib non-free" >> etc/apt/sources.list \
+#   && echo "deb https://mirrors.tuna.tsinghua.edu.cn/debian/ bullseye-backports main contrib non-free" >> /etc/apt/sources.list \
+#   && echo "deb https://security.debian.org/debian-security bullseye-security main contrib non-free" >> /etc/apt/sources.list
+
 RUN apt-get update
-RUN apt-get install -y libsecret-1-dev libzmq3-dev libzmq5 jq curl libbz2-dev libssl-dev libreadline-dev libncurses5 libncurses5-dev libncursesw5
-RUN apt-get install -y gcc g++ make git zsh
+RUN apt-get install -y git zsh curl
 
-RUN curl -fsSL https://deb.nodesource.com/setup_18.x | bash
-RUN apt-get install -y nodejs
+RUN curl -fsSL https://raw.githubusercontent.com/tj/n/master/bin/n | bash -s lts
 
-ENV PYENV_ROOT="${HOME}/.pyenv"
-ENV PATH="${PYENV_ROOT}/shims:${PYENV_ROOT}/bin:${PATH}"
-RUN apt-get install -y liblzma-dev libsqlite3-dev
-RUN curl -L https://github.com/pyenv/pyenv-installer/raw/master/bin/pyenv-installer | sh
-RUN mkdir -p $HOME/.pyenv/cache
-RUN v=3.9.16; curl -L https://npmmirror.com/mirrors/python/$v/Python-$v.tar.xz -o $HOME/.pyenv/cache/Python-$v.tar.xz; pyenv install $v; pyenv global $v
+RUN apt-get clean
 
 CMD ["/bin/sh"]
-
