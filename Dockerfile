@@ -10,13 +10,19 @@ ENV HOME="/home/ovm"
 
 RUN apt-get update
 RUN apt-get install -y git zsh curl sudo
+RUN apt-get clean
 
 RUN adduser --disabled-password  --shell /usr/bin/zsh --gecos '' ovm
 RUN adduser ovm sudo
 RUN echo '%sudo ALL=(ALL) NOPASSWD: ALL' >> /etc/sudoers
+USER ovm
 
-RUN curl -fsSL https://raw.githubusercontent.com/tj/n/master/bin/n | bash -s lts
+RUN curl -fsSL https://raw.githubusercontent.com/tj/n/master/bin/n | sudo bash -s lts
 
-RUN apt-get clean
+RUN mkdir ~/.npm-global
+RUN npm config set prefix "~/.npm-global"
+ENV PATH="$HOME/.npm-global/bin:$PATH"
+
+WORKDIR ${HOME}
 
 CMD ["/bin/zsh"]
