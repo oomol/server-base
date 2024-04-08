@@ -42,4 +42,7 @@ ENV PYENV_ROOT="${HOME}/.pyenv" PATH="${PYENV_ROOT}/shims:${PYENV_ROOT}/bin:${PA
 RUN pip config set global.index-url https://mirrors.aliyun.com/pypi/simple/
 RUN pip install wheel
 
+# save PATH
+RUN echo "export PATH=${PATH}" >> ~/.zshrc
+
 CMD ["/bin/zsh"]
