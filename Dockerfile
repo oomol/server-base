@@ -49,4 +49,7 @@ RUN pip install wheel
 # save PATH
 RUN echo "export PATH=${PATH}" >> ~/.zshrc
 
+# set font
+COPY ./fonts/* /usr/share/fonts/SourceHanSans/
+
 CMD ["/bin/zsh"]
