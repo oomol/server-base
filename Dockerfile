@@ -26,6 +26,8 @@ WORKDIR /app
 RUN sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 RUN sudo chsh -s $(which zsh)
 RUN sed -i 's/ZSH_THEME="robbyrussell"/ZSH_THEME="essembeh"/g' ~/.zshrc
+ENV SHELL /bin/zsh
+SHELL [ "/bin/zsh", "-c" ]
 
 # setup n / node / npm / pnpm
 RUN curl -fsSL https://raw.githubusercontent.com/tj/n/master/bin/n | sudo bash -s lts
@@ -34,8 +36,10 @@ RUN npm config set prefix "~/.npm-global"
 ENV PATH="$HOME/.npm-global/bin:$PATH"
 
 RUN npm install -g pnpm
-# fix https://github.com/pnpm/pnpm/issues/5803
-RUN pnpm config set store-dir ${HOME}/.pnpm-store
+ENV PNPM_HOME=${HOME}/.local/share/pnpm
+ENV PATH="$PNPM_HOME:$PATH"
+RUN pnpm config set store-dir ${PNPM_HOME}/store
+RUN pnpm setup zsh
 
 # setup python
 ENV PYENV_ROOT="${HOME}/.pyenv" PATH="${PYENV_ROOT}/shims:${PYENV_ROOT}/bin:${PATH}"
