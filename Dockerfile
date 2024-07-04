@@ -8,9 +8,10 @@ RUN apt-get install -y git zsh curl sudo
 RUN apt-get clean
 
 # create ovm user with sudo privileges
-RUN adduser --disabled-password  --shell /usr/bin/zsh --gecos '' ovm
+RUN adduser --uid 1000 --disabled-password --shell /usr/bin/zsh --gecos '' ovm
 RUN adduser ovm sudo
 RUN echo '%sudo ALL=(ALL) NOPASSWD: ALL' >> /etc/sudoers
+ENV UID=1000 GID=1000
 USER ovm
 
 # set ssh
