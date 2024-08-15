@@ -62,6 +62,7 @@ RUN echo "export PATH=${PATH}" >> ~/.zshrc
 COPY ./fonts/* /usr/share/fonts/SourceHanSans/
 
 # set matplotlibrc
+RUN mkdir -p ${HOME}/.config/matplotlib/
 COPY --chown=ovm ./matplotlib/* ${HOME}/.config/matplotlib/
 
 CMD ["/bin/zsh"]
