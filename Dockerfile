@@ -49,7 +49,8 @@ ENV PYTHON_VERSION="3.12.1"
 ENV PATH="${HOME}/.local/uv_bin/bin/:${PATH}"
 RUN curl -LsSf https://astral.sh/uv/install.sh | env UV_INSTALL_DIR=${HOME}/.local/uv_bin bash && \
     uv python install ${PYTHON_VERSION} 
-# ENV is a static command and cannot obtain the architecture information of the local machine.
+# We need to make python effective globally, but uv currently does not have a command to directly obtain the full path of the current python, so it can be done by manual concatenation.
+# Also, there is no elegant way to get the current architecture, so we can only solve it by adding all the paths for x64 and arm64 to PATH.
 ENV PATH="${HOME}/.local/share/uv/python/cpython-${PYTHON_VERSION}-linux-x86_64-gnu/bin:${HOME}/.local/share/uv/python/cpython-${PYTHON_VERSION}-linux-aarch64-gnu/bin:${PATH}"
 
 # WSL2 GPU Driver libraries load path
