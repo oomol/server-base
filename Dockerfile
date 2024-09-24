@@ -45,13 +45,16 @@ RUN pnpm config set store-dir ${PNPM_HOME}/store && \
     pnpm setup zsh
 
 # setup uv and python
-ENV PYTHON_VERSION="3.12.1"
+ENV PYTHON_VERSION="3.10.12"
 ENV PATH="${HOME}/.local/uv_bin/bin/:${PATH}"
 RUN curl -LsSf https://astral.sh/uv/install.sh | env UV_INSTALL_DIR=${HOME}/.local/uv_bin bash && \
     uv python install ${PYTHON_VERSION} 
+
 # We need to make python effective globally, but uv currently does not have a command to directly obtain the full path of the current python, so it can be done by manual concatenation.
 # Also, there is no elegant way to get the current architecture, so we can only solve it by adding all the paths for x64 and arm64 to PATH.
 ENV PATH="${HOME}/.local/share/uv/python/cpython-${PYTHON_VERSION}-linux-x86_64-gnu/bin:${HOME}/.local/share/uv/python/cpython-${PYTHON_VERSION}-linux-aarch64-gnu/bin:${PATH}"
+# Remove EXTERNALLY-MANAGED to allow pip to install packages globally
+RUN rm "$(python3 -c "import site, sysconfig; print(sysconfig.get_path('stdlib'));")/EXTERNALLY-MANAGED"
 
 # WSL2 GPU Driver libraries load path
 RUN mkdir -p "/etc/ld.so.conf.d" && \
