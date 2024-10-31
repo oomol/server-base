@@ -5,7 +5,7 @@ ENV LANG="C.UTF-8"
 
 # install system dependencies
 RUN apt-get update && \
-    apt-get install -y --no-install-recommends git zsh curl wget sudo ca-certificates build-essential locales-all tar xz-utils uuid-runtime && \
+    apt-get install -y --no-install-recommends git zsh curl wget sudo ca-certificates build-essential locales-all tar xz-utils uuid-runtime libtalloc-dev && \
     apt-get clean && \
     apt-get autoremove && \
     rm -rf /var/lib/apt/lists/*
