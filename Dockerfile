@@ -5,7 +5,7 @@ ENV LANG="C.UTF-8"
 
 # install system dependencies
 RUN apt-get update && \
-    apt-get install -y --no-install-recommends git zsh curl wget sudo ca-certificates build-essential locales-all tar xz-utils uuid-runtime libtalloc-dev && \
+    apt-get install -y --no-install-recommends git zsh curl wget sudo ca-certificates build-essential locales-all tar xz-utils uuid-runtime libtalloc-dev unzip && \
     apt-get clean && \
     apt-get autoremove && \
     rm -rf /var/lib/apt/lists/*
@@ -27,16 +27,16 @@ SHELL [ "/bin/zsh", "-c" ]
 
 
 # setup nvm / node / npm / pnpm
-ENV NVM_DIR="${HOME}/.nvm"
-RUN mkdir -p ${NVM_DIR}
-RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash
-ENV NODE_VERSION="20.15.1"
-RUN source ${NVM_DIR}/nvm.sh && \
-    nvm install ${NODE_VERSION} && \
-    nvm use ${NODE_VERSION} && \
-    nvm alias default ${NODE_VERSION} && \
-    rm -rf ${NVM_DIR}/.* ${NVM_DIR}/*.md ${NVM_DIR}/test ${NVM_DIR}/versions/node/v${NODE_VERSION}/*.md
-ENV PATH="$NVM_DIR/versions/node/v$NODE_VERSION/bin:$PATH"
+ENV NODE_VERSION="v20.18.0"
+
+RUN curl -fsSL https://raw.githubusercontent.com/Schniz/fnm/refs/tags/v1.37.2/.ci/install.sh | bash
+ENV FNM_PATH="$HOME/.local/share/fnm"
+ENV PATH="${FNM_PATH}/node-versions/$NODE_VERSION/installation/bin:${PATH}"
+
+RUN source $HOME/.zshrc && \
+    fnm install ${NODE_VERSION} && \
+    fnm use ${NODE_VERSION} && \
+    fnm alias default ${NODE_VERSION}
 
 RUN npm install -g pnpm
 ENV PNPM_HOME="${HOME}/.local/share/pnpm"
@@ -46,7 +46,7 @@ RUN pnpm config set store-dir ${PNPM_HOME}/store && \
 
 # setup uv and python
 ENV PYTHON_VERSION="3.10.12"
-ENV PATH="${HOME}/.local/uv_bin/bin/:${PATH}"
+ENV PATH="${HOME}/.local/uv_bin/:${PATH}"
 RUN curl -LsSf https://astral.sh/uv/install.sh | env UV_INSTALL_DIR=${HOME}/.local/uv_bin bash && \
     uv python install ${PYTHON_VERSION} 
 
