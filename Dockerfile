@@ -75,4 +75,7 @@ COPY ./fonts/* /usr/share/fonts/SourceHanSans/
 RUN mkdir -p ${HOME}/.config/matplotlib/
 COPY ./matplotlib/* ${HOME}/.config/matplotlib/
 
+# set default timezone
+RUN echo "Etc/UTC" > /etc/timezone
+
 CMD ["zsh"]
