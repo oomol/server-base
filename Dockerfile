@@ -78,4 +78,6 @@ COPY ./matplotlib/* ${HOME}/.config/matplotlib/
 # set default timezone
 RUN echo "Etc/UTC" > /etc/timezone
 
+RUN echo 'APT::Install-Recommends "false";' >> /etc/apt/apt.conf.d/99-recommends
+
 CMD ["zsh"]
