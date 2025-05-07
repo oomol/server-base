@@ -87,6 +87,7 @@ RUN python -m venv ${POETRY_INSTALL_PATH} && \
     ${POETRY_INSTALL_PATH}/bin/pip install -U pip setuptools && \
     ${POETRY_INSTALL_PATH}/bin/pip install poetry==${POETRY_VERSION} && \
     ${POETRY_INSTALL_PATH}/bin/poetry config virtualenvs.create false && \
-    ln -s ${POETRY_INSTALL_PATH}/bin/poetry /usr/local/bin/poetry
+    ln -s ${POETRY_INSTALL_PATH}/bin/poetry /usr/local/bin/poetry && \
+    rm -rf ${HOME}/.cache
 
 CMD ["zsh"]
