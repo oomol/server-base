@@ -45,7 +45,7 @@ RUN pnpm config set store-dir ${PNPM_HOME}/store && \
     pnpm setup zsh
 
 # setup uv and python
-ENV PYTHON_VERSION="3.10.12"
+ENV PYTHON_VERSION="3.11.13"
 ENV PATH="${HOME}/.local/uv_bin/:${PATH}"
 
 # We need to make python effective globally, but uv currently does not have a command to directly obtain the full path of the current python, so it can be done by manual concatenation.
@@ -81,7 +81,7 @@ RUN echo "Etc/UTC" > /etc/timezone
 RUN echo 'APT::Install-Recommends "false";' >> /etc/apt/apt.conf.d/99-recommends
 
 # setup poetry
-ENV POETRY_VERSION="2.1.2"
+ENV POETRY_VERSION="2.1.4"
 ENV POETRY_INSTALL_PATH="${HOME}/.local/share/poetry"
 RUN python -m venv ${POETRY_INSTALL_PATH} && \
     ${POETRY_INSTALL_PATH}/bin/pip install -U pip setuptools && \
