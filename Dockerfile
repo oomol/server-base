@@ -66,7 +66,8 @@ ENV PATH="/usr/lib/wsl/lib/:${PATH}"
 # save PATH
 # without \$PATH the $PATH will be lost sometime or not be inherited after exec
 RUN echo "export PATH=${PATH}:\$PATH" >> $HOME/.zshrc && \
-    echo "DISABLE_AUTO_UPDATE=true" >> $HOME/.zshrc
+    echo "DISABLE_AUTO_UPDATE=true" >> $HOME/.zshrc && \
+    echo "zstyle ':omz:update' mode disabled" >> $HOME/.zshrc
 
 # set font
 COPY ./fonts/* /usr/share/fonts/SourceHanSans/
