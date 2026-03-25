@@ -21,7 +21,8 @@ WORKDIR /app
 # setup zsh
 RUN sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" && \
     sudo chsh -s $(which zsh) && \
-    sed -i 's/ZSH_THEME="robbyrussell"/ZSH_THEME="essembeh"/g' $HOME/.zshrc
+    sed -i 's/ZSH_THEME="robbyrussell"/ZSH_THEME="essembeh"/g' $HOME/.zshrc && \
+    sed -i "/^# zstyle ':omz:update' mode disabled/ s/^# //" $HOME/.zshrc
 ENV SHELL="/bin/zsh"
 SHELL [ "/bin/zsh", "-c" ]
 
