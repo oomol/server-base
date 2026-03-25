@@ -21,7 +21,8 @@ WORKDIR /app
 # setup zsh
 RUN sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" && \
     sudo chsh -s $(which zsh) && \
-    sed -i 's/ZSH_THEME="robbyrussell"/ZSH_THEME="essembeh"/g' $HOME/.zshrc
+    sed -i 's/ZSH_THEME="robbyrussell"/ZSH_THEME="essembeh"/g' $HOME/.zshrc && \
+    sed -i "/^# zstyle ':omz:update' mode disabled/ s/^# //" $HOME/.zshrc
 ENV SHELL="/bin/zsh"
 SHELL [ "/bin/zsh", "-c" ]
 
@@ -66,8 +67,7 @@ ENV PATH="/usr/lib/wsl/lib/:${PATH}"
 # save PATH
 # without \$PATH the $PATH will be lost sometime or not be inherited after exec
 RUN echo "export PATH=${PATH}:\$PATH" >> $HOME/.zshrc && \
-    echo "DISABLE_AUTO_UPDATE=true" >> $HOME/.zshrc && \
-    echo "zstyle ':omz:update' mode disabled" >> $HOME/.zshrc
+    echo "DISABLE_AUTO_UPDATE=true" >> $HOME/.zshrc
 
 # set font
 COPY ./fonts/* /usr/share/fonts/SourceHanSans/
