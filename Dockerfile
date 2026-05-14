@@ -28,7 +28,7 @@ SHELL [ "/bin/zsh", "-c" ]
 
 
 # setup nvm / node / npm / pnpm
-ENV NODE_VERSION="v22.14.0"
+ENV NODE_VERSION="v22.22.1"
 
 RUN curl -fsSL https://raw.githubusercontent.com/Schniz/fnm/refs/tags/v1.37.2/.ci/install.sh | bash
 ENV FNM_PATH="$HOME/.local/share/fnm"
